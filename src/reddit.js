@@ -9,9 +9,6 @@ export async function getRedditURL(subreddit) {
     const data = await response.json();
     const posts = data.data.children
         .map((post) => {
-            if (post.is_gallery) {
-                return '';
-            }
             return (
                 post.data?.media?.reddit_video?.fallback_url ||
                 post.data?.secure_media?.reddit_video?.fallback_url ||
