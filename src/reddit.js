@@ -3,12 +3,13 @@
 export async function handleSubredditCommand(env, message) {
     console.log("handling it after that happens")
     const results = await getRedditURL(message.data.options[0].value);
-    return fetch(`https://discord.com/api/v10/webhooks/${env.DISCORD_APPLICATION_ID}/${message.token}`, {
+    const response = await fetch(`https://discord.com/api/v10/webhooks/${env.DISCORD_APPLICATION_ID}/${message.token}`, {
         method: 'POST',
         body: {
                 'content': "test"
             }
-    })
+        })
+    console.log (await response.json())
 }
    
 export async function getRedditURL(subreddit) {
