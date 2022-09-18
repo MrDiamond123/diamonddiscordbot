@@ -38,7 +38,7 @@ router.post('/interactions', async (request, env, context) => {
     case InteractionType.APPLICATION_COMMAND:
       switch (message.data.name.toLowerCase()) {
         case REDDIT_COMMAND.name.toLowerCase():
-        context.waitUntil(await handleSubredditCommand(message))
+        context.waitUntil(await handleSubredditCommand(env, message))
         return new JsonResponse({
             type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
           })

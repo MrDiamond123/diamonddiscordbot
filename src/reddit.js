@@ -1,6 +1,6 @@
 ///@ts-nocheck
 
-export async function handleSubredditCommand(message) {
+export async function handleSubredditCommand(env, message) {
     console.log("FIRST")
     const results = await getRedditURL(message.data.options[0].value);
     console.log(await fetch(`https://discord.com/api/v10/webhooks/${env.DISCORD_APPLICATION_ID}/${message.token}`, {
