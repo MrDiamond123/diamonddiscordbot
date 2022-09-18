@@ -5,7 +5,7 @@ import {
   InteractionType,
   verifyKey,
 } from 'discord-interactions';
-import { getRedditURL, getSubredditAutocomplete } from './reddit';
+import { getRedditURL, getSubredditAutocomplete, handleSubredditCommand } from './reddit';
 import { REDDIT_COMMAND } from './commands';
 
 class JsonResponse extends Response {
@@ -26,7 +26,7 @@ router.get('/', (request, env) => {
   return new Response(`You did it! ${env.DISCORD_APPLICATION_ID}`)
 });
 
-router.post('/interactions', async (request, env) => {
+router.post('/interactions', async (request, env, context) => {
   const message = await request.json();
   console.log(message);
   switch (message.type) {
@@ -38,8 +38,8 @@ router.post('/interactions', async (request, env) => {
     case InteractionType.APPLICATION_COMMAND:
       switch (message.data.name.toLowerCase()) {
         case REDDIT_COMMAND.name.toLowerCase():
-          const posts = await getRedditURL(message.data.options[0].value)
-          return new JsonResponse({
+        context.waitUntil(await handleSubredditCommand(message))
+        return new JsonResponse({
             type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
           })
         default:
@@ -72,7 +72,7 @@ router.post('/interactions', async (request, env) => {
 router.all('*', () => new Response('Not Found.', { status: 404}))
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, context) {
     if (request.method === 'POST') {
       const signature = request.headers.get('x-signature-ed25519')
       const timestamp = request.headers.get('x-signature-timestamp')
