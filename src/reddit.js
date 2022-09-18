@@ -1,7 +1,9 @@
 ///@ts-nocheck
 
 export async function getRedditURL(subreddit) {
-    const response = await fetch(`https://api.reddit.com/r/${subreddit}/hot.json`, {
+    const params = new URLSearchParams();
+    params.append('limit', 10)
+    const response = await fetch(`https://api.reddit.com/r/${subreddit}/hot.json?${params}`, {
         headers: {
             'User-Agent': 'diamondmcpro:discordbot:v1.0.0 (by /u/diamondbro',
         },
@@ -11,7 +13,7 @@ export async function getRedditURL(subreddit) {
         .map((post) => {
             return {title: post.data?.title, url: post.data?.url, author: post.data?.author};
         })
-
+        console.log(posts)
         return posts;
 }
 export async function getSubredditAutocomplete(search) {
