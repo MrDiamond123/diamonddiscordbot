@@ -37,17 +37,23 @@ router.post('/', async (request, env) => {
     
     case InteractionType.APPLICATION_COMMAND:
       switch (message.data.name.toLowerCase()) {
-        case REDDIT_COMMAND.name.toLowerCase():
-          const posts = await getRedditURL(message.data.options[0].value)
-          return new JsonResponse({
-            type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-            data: {
-              content: posts,
-            },
-          })
+        // case REDDIT_COMMAND.name.toLowerCase():
+        //   const posts = await getRedditURL(message.data.options[0].value)
+        //   return new JsonResponse({
+        //     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        //     data: {
+        //       content: posts,
+        //     },
+        //   })
         default:
-          console.error('oh no unknown command')
-          return new JsonResponse({error: 'Unknown Type'}, {status: 400})
+          // console.error('oh no unknown command')
+          // return new JsonResponse({error: 'Unknown Type'}, {status: 400})
+          return new JsonResponse({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: "Command did command things"
+            } 
+          })
       }
     
     case InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE:
