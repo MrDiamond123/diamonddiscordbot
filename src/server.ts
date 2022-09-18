@@ -85,6 +85,6 @@ export default {
         return new Response('Bad request signature', { status: 401 })
       }
     }
-    return router.handle(request, env)
+    return router.handle(request, env, context)
   },
 }
