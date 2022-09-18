@@ -11,7 +11,7 @@ export async function getRedditURL(subreddit) {
     const data = await response.json();
     const posts = data.data.children
         .map((post) => {
-            return {title: post.data?.title, url: post.data?.url, author: post.data?.author};
+            return {title: post.data?.title};
         })
         console.log(posts)
         return posts;

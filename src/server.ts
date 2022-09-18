@@ -6,6 +6,7 @@ import {
   verifyKey,
 } from 'discord-interactions';
 import { getRedditURL, getSubredditAutocomplete } from './reddit';
+import { REDDIT_COMMAND } from './commands';
 
 class JsonResponse extends Response {
   constructor(body?: BodyInit | null | undefined, init?: ResponseInit | Response | undefined) {
@@ -30,21 +31,19 @@ router.post('/', async (request, env) => {
   console.log(message);
   switch (message.type) {
     case InteractionType.PING:
-      console.log('Ping!')
       return new JsonResponse({
         type: InteractionResponseType.PONG,
       });
     
     case InteractionType.APPLICATION_COMMAND:
       switch (message.data.name.toLowerCase()) {
-        case 'reddit':
-          console.log('reddit moment')
+        case REDDIT_COMMAND.name.toLowerCase():
           const posts = await getRedditURL(message.data.options[0].value)
           return new JsonResponse({
-            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
-              content: "potato"
-            }
+              content: posts,
+            },
           })
         default:
           console.error('oh no unknown command')
@@ -53,7 +52,7 @@ router.post('/', async (request, env) => {
     
     case InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE:
       switch (message.data.name.toLowerCase()) {
-        case 'reddit':
+        case REDDIT_COMMAND.name.toLowerCase():
             const subreddits = await getSubredditAutocomplete(message.data.options[0].value)
             return new JsonResponse({
               type: InteractionResponseType.APPLICATION_COMMAND_AUTOCOMPLETE_RESULT,
