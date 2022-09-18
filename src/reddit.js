@@ -1,13 +1,16 @@
 ///@ts-nocheck
 
 export async function handleSubredditCommand(message) {
-    const results = await getRedditURL(message.data.options[0].value)
-    return await fetch(`https://discord.com/api/v10/webhooks/${env.DISCORD_APPLICATION_ID}/${message.token}`, {
+    console.log("FIRST")
+    const results = await getRedditURL(message.data.options[0].value);
+    console.log(await fetch(`https://discord.com/api/v10/webhooks/${env.DISCORD_APPLICATION_ID}/${message.token}`, {
         body: {
             'content': "test"
         }
-    })
+    }))
+    return; 
 }
+   
 export async function getRedditURL(subreddit) {
     const params = new URLSearchParams();
     params.append('limit', 10)
