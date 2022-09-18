@@ -39,10 +39,11 @@ router.post('/interactions', async (request, env, context) => {
       switch (message.data.name.toLowerCase()) {
         case REDDIT_COMMAND.name.toLowerCase():
           console.log('when does this run')
-          const respond = async () => { return new JsonResponse({
-              type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-          })}
           context.waitUntil(handleSubredditCommand(env, message))
+          return new JsonResponse({
+              type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+          })
+
         default:
           // console.error('oh no unknown command')
           // return new JsonResponse({error: 'Unknown Type'}, {status: 400})
