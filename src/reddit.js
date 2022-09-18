@@ -1,7 +1,7 @@
 ///@ts-nocheck
 
 export async function handleSubredditCommand(env, message) {
-    console.log("FIRST")
+    console.log("handling it after that happens")
     const results = await getRedditURL(message.data.options[0].value);
     console.log(await fetch(`https://discord.com/api/v10/webhooks/${env.DISCORD_APPLICATION_ID}/${message.token}`, {
         method: 'POST',
