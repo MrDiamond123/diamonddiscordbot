@@ -22,7 +22,7 @@ class JsonResponse extends Response {
 
 const router = Router();
 
-router.get('/', (request, env) => {
+router.get('/', (request, env, context) => {
   return new Response(`You did it! ${env.DISCORD_APPLICATION_ID}`)
 });
 
@@ -38,10 +38,10 @@ router.post('/interactions', async (request, env, context) => {
     case InteractionType.APPLICATION_COMMAND:
       switch (message.data.name.toLowerCase()) {
         case REDDIT_COMMAND.name.toLowerCase():
-        context.waitUntil(await handleSubredditCommand(env, message))
-        console.log('when does this run')
-        return new JsonResponse({
-            type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+          context.waitUntil(await handleSubredditCommand(env, message))
+          console.log('when does this run')
+          return new JsonResponse({
+              type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
           })
         default:
           // console.error('oh no unknown command')
