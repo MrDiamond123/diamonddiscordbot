@@ -9,7 +9,7 @@ export async function handleSubredditCommand(env, message) {
                 'content': "test"
             }
         })
-    console.dir(await JSON.stringify(response.json()))
+    console.log(await JSON.stringify(response.json()))
 }
    
 export async function getRedditURL(subreddit) {
