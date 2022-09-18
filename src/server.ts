@@ -53,7 +53,7 @@ router.post('/', async (request, env) => {
           return new JsonResponse({
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
-              content: JSON.stringify(posts)
+              content: posts
             }
           })
         default:
@@ -68,7 +68,7 @@ router.post('/', async (request, env) => {
             return new JsonResponse({
               type: InteractionResponseType.APPLICATION_COMMAND_AUTOCOMPLETE_RESULT,
               data: {
-                choices: JSON.stringify(subreddits),
+                choices: subreddits,
               }
             })
       }

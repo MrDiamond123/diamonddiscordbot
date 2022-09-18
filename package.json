@@ -12,5 +12,14 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "discord-interactions": "^3.2.0",
+    "itty-router": "^2.6.3"
+  },
+  "devDependencies": {
+    "ngrok": "^4.3.3",
+    "node-fetch": "^3.2.10",
+    "wrangler": "^2.1.4"
+  }
 }
