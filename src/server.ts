@@ -26,7 +26,7 @@ router.get('/', (request, env) => {
   return new Response(`You did it! ${env.DISCORD_APPLICATION_ID}`)
 });
 
-router.post('/', async (request, env) => {
+router.post('/interactions', async (request, env) => {
   const message = await request.json();
   console.log(message);
   switch (message.type) {
@@ -37,21 +37,21 @@ router.post('/', async (request, env) => {
     
     case InteractionType.APPLICATION_COMMAND:
       switch (message.data.name.toLowerCase()) {
-        // case REDDIT_COMMAND.name.toLowerCase():
-        //   const posts = await getRedditURL(message.data.options[0].value)
-        //   return new JsonResponse({
-        //     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-        //     data: {
-        //       content: posts,
-        //     },
-        //   })
+        case REDDIT_COMMAND.name.toLowerCase():
+          const posts = await getRedditURL(message.data.options[0].value)
+          return new JsonResponse({
+            type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: posts,
+            },
+          })
         default:
           // console.error('oh no unknown command')
           // return new JsonResponse({error: 'Unknown Type'}, {status: 400})
           return new JsonResponse({
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
-              content: "Command did command things"
+              content: "If you see this message, you somehow ran a command that doesn't exist"
             } 
           })
       }
