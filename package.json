@@ -1,0 +1,16 @@
+{
+  "name": "diamonddiscordbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev src/server.ts",
+    "ngrok": "ngrok http 8787",
+    "publish": "wrangler publish",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,4 @@
+name = "diamonddiscordbot"
+main = "src/index.ts"
+compatibility_date = "2022-09-18"
+node_compat = true
