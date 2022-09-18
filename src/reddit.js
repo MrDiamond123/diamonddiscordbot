@@ -9,13 +9,9 @@ export async function getRedditURL(subreddit) {
     const data = await response.json();
     const posts = data.data.children
         .map((post) => {
-            return (
-                post.data?.media?.reddit_video?.fallback_url ||
-                post.data?.secure_media?.reddit_video?.fallback_url ||
-                post.data?.url
-            );
+            return {title: post.data?.title, url: post.data?.url, author: post.data?.author};
         })
-        .filter((post) => !!post);
+
         return posts;
 }
 export async function getSubredditAutocomplete(search) {
