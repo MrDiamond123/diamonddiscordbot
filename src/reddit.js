@@ -1,20 +1,23 @@
 ///@ts-nocheck
 
+
 export async function handleSubredditCommand(env, message) {
-    console.log("handling it after that happens")
     const results = await getRedditURL(message.data.options[0].value);
+    const data = {embeds: results, content: "test"}
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json')
     const response = await fetch(`https://discord.com/api/v10/webhooks/${env.DISCORD_APPLICATION_ID}/${message.token}`, {
         method: 'POST',
-        body: {
-                'content': "test"
-            }
-        })
-    console.log(response.json)
+        body: JSON.stringify(data),
+        headers: headers
+     })
+
+    console.log(await response.json())
 }
    
 export async function getRedditURL(subreddit) {
     const params = new URLSearchParams();
-    params.append('limit', 10)
+    params.append('limit', 9)
     const response = await fetch(`https://api.reddit.com/r/${subreddit}/hot.json?${params}`, {
         headers: {
             'User-Agent': 'diamondmcpro:discordbot:v1.0.0 (by /u/diamondbro',
@@ -23,7 +26,7 @@ export async function getRedditURL(subreddit) {
     const data = await response.json();
     const posts = data.data.children
         .map((post) => {
-            return {title: post.data?.title};
+            return {title: post.data?.title, description: 'description'};
         })
         console.log(posts)
         return posts;
