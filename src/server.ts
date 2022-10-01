@@ -58,7 +58,7 @@ router.post('/interactions', async (request, env, context) => {
     case InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE:
       switch (message.data.name.toLowerCase()) {
         case REDDIT_COMMAND.name.toLowerCase():
-            const subreddits = await getSubredditAutocomplete(message.data.options[0].value)
+            const subreddits = await getSubredditAutocomplete(message.data.options[0].value, message.channel_id)
             return new JsonResponse({
               type: InteractionResponseType.APPLICATION_COMMAND_AUTOCOMPLETE_RESULT,
               data: {

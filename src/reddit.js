@@ -1,5 +1,7 @@
 ///@ts-nocheck
 
+import { getChannel } from "./discord";
+
 
 export async function handleSubredditCommand(env, message) {
     const results = await getRedditURL(message.data.options[0].value);
@@ -26,15 +28,16 @@ export async function getRedditURL(subreddit) {
     const data = await response.json();
     const posts = data.data.children
         .map((post) => {
-            return {title: post.data?.title, description: 'description'};
+            return {title: post.data?.title, author: {name: post.data?.author}, provider: {name: "Reddit", url: "https://reddit.com"} };
         })
         console.log(posts)
         return posts;
 }
-export async function getSubredditAutocomplete(search) {
+export async function getSubredditAutocomplete(search, channel) {
+    const channelData = await getChannel(channel);
     const params = new URLSearchParams();
     params.append('query', search);
-    params.append('include_over_18', true)
+    params.append('include_over_18', channelData.nsfw)
     params.append('limit', 10)
     params.append('include_profiles', false)
     const response = await fetch(`https://api.reddit.com/api/subreddit_autocomplete_v2.json?${params}`, {
