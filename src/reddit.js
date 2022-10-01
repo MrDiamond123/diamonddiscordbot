@@ -28,7 +28,8 @@ export async function getRedditURL(subreddit) {
     const data = await response.json();
     const posts = data.data.children
         .map((post) => {
-            return {title: "&quot" + post.data?.title + "&quot", description: 'description', author: {name: post.data?.author}, url: `https://reddit.com${post.data?.permalink}` };
+            return {title: "'" + post.data?.title + "'", description: 'description', author: {name: post.data?.author}, url: `https://reddit.com${post.data?.permalink}` };
+            
         })
         console.log(posts)
         return posts;
