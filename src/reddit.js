@@ -14,7 +14,7 @@ export async function handleSubredditCommand(env, message) {
         headers: headers
      })
 
-    console.log(await response.json())
+    console.log(await response.json());
 }
    
 export async function getRedditURL(subreddit) {
@@ -28,19 +28,21 @@ export async function getRedditURL(subreddit) {
     const data = await response.json();
     const posts = data.data.children
         .map((post) => {
-            return {title: "'" + post.data?.title + "'", description: 'description', author: {name: post.data?.author}, url: `https://reddit.com${post.data?.permalink}` };
+            return {title: `${post.data?.title}`.replace(/"/g, '&quot;').replace(/'/g, '&apos;'), description: 'description', author: {name: post.data?.author}, url: `https://reddit.com${post.data?.permalink}` };
             
         })
-        console.log(posts)
+        console.log(posts);
         return posts;
 }
+
 export async function getSubredditAutocomplete(search, channel) {
     const channelData = await getChannel(channel);
+    console.log(channelData);
     const params = new URLSearchParams();
     params.append('query', search);
-    params.append('include_over_18', channelData.nsfw)
-    params.append('limit', 10)
-    params.append('include_profiles', false)
+    params.append('include_over_18', channelData.nsfw);
+    params.append('limit', 10);
+    params.append('include_profiles', false);
     const response = await fetch(`https://api.reddit.com/api/subreddit_autocomplete_v2.json?${params}`, {
         headers: {
             'User-Agent': 'diamondmcpro:discordbot:v1.0.0 (by /u/diamondbro',
